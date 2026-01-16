@@ -120,7 +120,7 @@ export default function CanastraCalculator() {
 
   useEffect(() => {
 const tagManagerArgs = {
-   gtmId: 'G-1TDH264J5N'
+   gtmId: 'GTM-KW4HK3RZ'
  };
   TagManager.initialize(tagManagerArgs)
   }, [])
