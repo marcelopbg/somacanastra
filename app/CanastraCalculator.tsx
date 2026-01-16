@@ -1,7 +1,6 @@
 'use client'
 import { useEffect, useMemo, useState } from 'react'
 import './App.css'
-import TagManager from 'react-gtm-module';
 
 /* =======================
    DOMAIN MODELS
@@ -116,14 +115,6 @@ export default function CanastraCalculator() {
     setPlayerNaoPegouMorto(false)
     setScore(new PlayerScore())
   }
-
-
-  useEffect(() => {
-const tagManagerArgs = {
-   gtmId: 'GTM-KW4HK3RZ'
- };
-  TagManager.initialize(tagManagerArgs)
-  }, [])
 
   const total = useMemo(
     () => calculatePoints(playerBateu, playerNaoPegouMorto, score),
