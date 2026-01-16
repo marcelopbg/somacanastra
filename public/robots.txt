@@ -1,0 +1,3 @@
+# robots.txt for Calculadora de Canastra
+User-agent: *
+Disallow:
