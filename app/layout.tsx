@@ -15,65 +15,61 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: 'Calculadora de Canastra Online',
-    template: '%s | Canastra'
+    default: 'Calculadora de Pontos Canastra e Pontos Buraco',
+    template: '%s | Soma Canastra',
   },
   description:
-    'Calculadora gratuita de pontuação de Canastra. ' +
-    'Calcule canastras limpas, sujas, curingas e penalidades.',
+    'Calculadora online de pontos de canastra e pontos de buraco. ' +
+    'Some a pontuação do jogo de forma rápida, correta e sem erros.',
   keywords: [
-    'canastra',
+    'pontos canastra',
+    'pontos buraco',
     'calculadora de canastra',
+    'calculadora de pontos canastra',
+    'calculadora de pontos buraco',
     'pontuação canastra',
-    'regras da canastra',
-    'jogo de cartas'
+    'pontuação buraco',
+    'canastra',
+    'buraco',
+    'jogo de cartas',
   ],
   openGraph: {
-    title: 'Calculadora de Canastra',
+    title: 'Calculadora de Pontos Canastra e Pontos Buraco',
     description:
-      'Calcule a pontuação da Canastra de forma rápida e precisa.',
+      'Calcule os pontos da canastra e do buraco de forma simples, rápida e correta.',
     type: 'website',
-    locale: 'pt_BR'
+    locale: 'pt_BR',
   },
   robots: {
     index: true,
-    follow: true
-  }
+    follow: true,
+  },
 }
+
 
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-
-
-
   return (
     <html lang="pt-BR">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <head>
-          <script async src="https://www.googletagmanager.com/gtag/js?id=G-1TDH264J5N"></script>
-          <Script id="google-analytics" strategy="afterInteractive">
-            {`
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+        <Script
+          async
+          src="https://www.googletagmanager.com/gtag/js?id=G-1TDH264J5N"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-1TDH264J5N');
+          `}
+        </Script>
 
-  gtag('config', 'G-1TDH264J5N');
-    `}
-          </Script>
-          <Script id="tag-manager" strategy="afterInteractive">
-            {` window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-1TDH264J5N');
-`}
-          </Script>
-        </head>
         {children}
       </body>
     </html>

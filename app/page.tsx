@@ -3,46 +3,33 @@ import CanastraCalculator from './CanastraCalculator'
 
 export default function Page() {
   return (
-    <main style={{width: '100%', display: 'flex', justifyContent: 'center'}}>
+    <main style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
       {/* Visible content */}
       <CanastraCalculator />
 
       {/* SEO + Accessibility content (dvisually hidden, indexable) */}
-      <section className="sr-only">
-        <h1>Calculadora de Pontuação de Canastra</h1>
+      <section className="sr-only" aria-labelledby="page-title">
+  <h1 id="page-title">CAlculadora de Pontos Canastra e Pontos Buraco</h1>
 
         <p>
-          Esta calculadora de canastra permite calcular a pontuação
-          final do jogo de forma rápida e precisa, seguindo as regras
-          tradicionais da canastra brasileira.
+          O Soma Canastra é uma calculadora online para calcular os pontos da canastra
+          e os pontos do buraco de forma simples e precisa. O app foi criado para
+          ajudar jogadores a somar corretamente a pontuação ao final de cada partida,
+          evitando erros comuns na contagem manual.
         </p>
 
-        <h2>Como funciona a pontuação da Canastra</h2>
         <p>
-          A pontuação da canastra considera canastras limpas, canastras
-          sujas, cartas restantes na mão, curingas, ases e penalidades
-          como não pegar o morto ou bater no jogo.
+          Com esta calculadora de canastra e buraco, é possível calcular rapidamente
+          canastras limpas, canastras sujas, cartas restantes na mão, curingas,
+          penalidades e bônus como bater no jogo ou não pegar o morto.
         </p>
 
-        <h2>Regras de pontuação consideradas</h2>
-        <ul>
-          <li>Canastra limpa vale 200 pontos</li>
-          <li>Canastra suja vale 100 pontos</li>
-          <li>Canastra de 500 pontos</li>
-          <li>Canastra de 1000 pontos</li>
-          <li>Coringa vale 50 pontos</li>
-          <li>Ás vale 15 pontos</li>
-          <li>Cartas de 8 a K valem 10 pontos</li>
-          <li>Cartas de 3 a 7 valem 5 pontos</li>
-          <li>Bater adiciona 100 pontos</li>
-          <li>Não pegar o morto subtrai 100 pontos</li>
-        </ul>
-
         <p>
-          Use esta calculadora de canastra online para conferir a
-          pontuação correta ao final de cada partida.
+          Use o Soma Canastra como marcador de pontos durante o jogo ou apenas no final
+          da partida para conferir se a pontuação da canastra ou do buraco está correta.
         </p>
       </section>
+
     </main>
   )
 }
