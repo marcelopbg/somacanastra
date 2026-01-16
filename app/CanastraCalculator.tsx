@@ -208,7 +208,7 @@ export default function CanastraCalculator() {
         ))}
       </div>
 
-      <h3 style={{ color: 'lightgreen' }}>
+      <h3 className='sum-h3'>
         SOMA: {total}
       </h3>
     </div>

@@ -59,3 +59,11 @@
   margin-bottom: 10px;
 }
 
+.sum-h3 { 
+  color: lightgreen;
+}
+@media (prefers-color-scheme: light) {
+  .sum-h3 {
+    color: rgb(21, 199, 21);
+  }
+}
