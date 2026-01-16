@@ -52,7 +52,7 @@ export default function RootLayout({
   return (
     <html lang="pt-BR">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen bg-white text-slate-900 dark:bg-slate-900 dark:text-slate-100`}
       >
         <head>
           <script async src="https://www.googletagmanager.com/gtag/js?id=G-1TDH264J5N"></script>

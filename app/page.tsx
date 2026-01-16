@@ -3,7 +3,7 @@ import CanastraCalculator from './CanastraCalculator'
 
 export default function Page() {
   return (
-    <main style={{width: '100%', display: 'flex', justifyContent: 'center'}}>
+    <main className="w-full flex justify-center">
       {/* Visible content */}
       <CanastraCalculator />
 
