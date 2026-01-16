@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import TagManager from 'react-gtm-module';
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -46,20 +45,17 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const tagManagerArgs = {
-    gtmId: 'GTM-XXXXXXX' // Replace with your actual GTM ID
-  };
 
-  TagManager.initialize(tagManagerArgs)
+
 
   return (
     <html lang="pt-BR">
-      <header>
-        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4294756891306943" crossOrigin="anonymous"></script>
-      </header>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <header>
+          <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4294756891306943" crossOrigin="anonymous"></script>
+        </header>
         {children}
       </body>
     </html>
