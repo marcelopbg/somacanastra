@@ -65,6 +65,14 @@ export default function RootLayout({
   gtag('config', 'G-1TDH264J5N');
     `}
           </Script>
+          <Script id="tag-manager" strategy="afterInteractive">
+            {` window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-1TDH264J5N');
+`}
+          </Script>
         </head>
         {children}
       </body>
