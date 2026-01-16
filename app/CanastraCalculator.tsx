@@ -170,7 +170,7 @@ export default function CanastraCalculator() {
 
       <h4>Para SOMAR</h4>
       <div className="lil-gap">
-        {cardFields.map(f => f.showOnSubtract && (
+        {cardFields.map(f =>  (
           <div className="form-item" key={f.key}>
             <label>{f.label}</label>
             <input
@@ -190,7 +190,7 @@ export default function CanastraCalculator() {
 
       <h4>Para SUBTRAIR</h4>
       <div className="lil-gap">
-        {cardFields.map(f => (
+        {cardFields.map(f => f.showOnSubtract !== false && (
           <div className="form-item" key={f.key}>
             <label>{f.label}</label>
             <input
