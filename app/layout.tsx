@@ -40,6 +40,9 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'pt_BR',
   },
+  icons: {
+    icon: 'favicon.ico',
+  },
   robots: {
     index: true,
     follow: true,
