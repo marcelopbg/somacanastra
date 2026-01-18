@@ -122,7 +122,7 @@ export default function CanastraCalculator() {
   )
 
   // Reusable className constants
-  const containerClass = 'max-w-[1280px] flex flex-col gap-3 max-h-[100svh]'
+  const containerClass = 'max-w-[1280px] flex flex-col gap-3'
   const checkboxGroupClass = 'flex flex-col gap-1'
   const checkboxLabelClass = 'ml-2'
   const sectionTitleClass = 'font-bold uppercase'
