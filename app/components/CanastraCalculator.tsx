@@ -1,12 +1,9 @@
 'use client'
-import { useMemo, useState, useEffect } from 'react'
-import CreatableSelect from 'react-select/creatable'
-import type { StylesConfig, Theme } from 'react-select'
-import toast from 'react-hot-toast'
-import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from '../../components/ui/dialog'
+import Link from 'next/link'
+import { useMemo, useState } from 'react'
 import { navLinkClass, primaryButtonClass, secondaryButtonClass } from '../lib/styleElements'
 import { SaveDialog } from './SaveDialog'
-import Link from 'next/link'
+import { useScoreContext } from './ScoreContext'
 // Tailwind replaces all custom CSS styles
 
 /* =======================
@@ -112,8 +109,7 @@ const canastraFields: { key: CanastraKey; label: string }[] = [
 export default function CanastraCalculator() {
   const [playerBateu, setPlayerBateu] = useState(false)
   const [playerNaoPegouMorto, setPlayerNaoPegouMorto] = useState(false)
-
-  const [score, setScore] = useState<PlayerScore>(new PlayerScore())
+  const {score, setScore } = useScoreContext();
 
   const updateCards = (
     target: 'cardsToSum' | 'cardsToSubtract',

@@ -1,11 +1,10 @@
 'use client'
-import { createContext, useContext, useEffect, useState } from "react";
-import toast from "react-hot-toast";
-import { SavedScore } from "./CanastraCalculator";
+import { createContext, SetStateAction, useContext, useEffect, useState } from "react";
+import { PlayerScore, SavedScore } from "./CanastraCalculator";
 
 
 interface ScoreContextType {
-    scoreList: SavedScore[], isScoreLoading: boolean, clearAll: () => void, removeItem: (id: string) => void, handleSave: (score: SavedScore) => void;
+    scoreList: SavedScore[], isScoreLoading: boolean, clearAll: () => void, removeItem: (id: string) => void, handleSave: (score: SavedScore) => void; score: PlayerScore; setScore: React.Dispatch<SetStateAction<PlayerScore>>; 
 }
 const ScoreContext = createContext<ScoreContextType | undefined>(undefined);
 
@@ -13,9 +12,11 @@ const ScoreContext = createContext<ScoreContextType | undefined>(undefined);
 export const ScoreContextProvider = ({ children }: { children: React.ReactNode }) => {
 
 
+    
     const LS_KEY = "canastra:saved-scores";
     const [scoreList, setScoreList] = useState<SavedScore[]>([]);
     const [isScoreLoading, setIsScoreLoading] = useState<boolean>(true);
+    const [score, setScore] = useState<PlayerScore>(new PlayerScore())
 
     useEffect(() => {
         try {
@@ -48,7 +49,7 @@ export const ScoreContextProvider = ({ children }: { children: React.ReactNode }
     
 
 
-    return <ScoreContext.Provider value={{ scoreList, isScoreLoading, clearAll, removeItem, handleSave }}>
+    return <ScoreContext.Provider value={{ scoreList, isScoreLoading, clearAll, removeItem, handleSave, score, setScore }}>
 
         {children}
     </ScoreContext.Provider>

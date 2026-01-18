@@ -78,7 +78,9 @@ export default function RootLayout({
 
         <ScoreContextProvider>
           <main className="w-full py-8">
+            <div className="px-4 py-3">
           {children}
+            </div>
           </main>
         </ScoreContextProvider>
         <Toaster position="top-right" />

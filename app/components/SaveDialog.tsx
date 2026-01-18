@@ -1,11 +1,11 @@
-import { Dialog, DialogContent, DialogTitle, DialogFooter, DialogHeader } from "../../components/ui/dialog"
-import CreatableSelect from "react-select/creatable"
 import { SetStateAction, useState } from "react";
+import toast from "react-hot-toast";
 import { StylesConfig, Theme } from "react-select";
+import CreatableSelect from "react-select/creatable";
+import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "../../components/ui/dialog";
 import { primaryButtonClass, secondaryButtonClass } from "../lib/styleElements";
 import { PlayerScore, SavedScore } from "./CanastraCalculator";
 import { useScoreContext } from "./ScoreContext";
-import toast from "react-hot-toast";
 
 interface SaveDialogProps {
     isSaveOpen: boolean;
@@ -69,16 +69,16 @@ export const SaveDialog = ({ isSaveOpen, setIsSaveOpen, total, playerBateu, play
         clearIndicator: (base) => ({ ...base, padding: 4 }),
         indicatorsContainer: (base) => ({ ...base, paddingRight: 4 }),
     }
-    
-    const [ownerOption, setOwnerOption] = useState<OwnerOption | null>(null);
-    const { handleSave, scoreList } = useScoreContext();
 
+    const [ownerOption, setOwnerOption] = useState<OwnerOption | null>(null);
+    const [inputVal, setInputVal] = useState('');
+    const { handleSave, scoreList } = useScoreContext();
     const owners = Array.from(scoreList.map(s => s.ownerName).reduce((prev, curr) => {
         prev.add(curr);
         return prev;
     }, new Set<string>));
-    
-    const ownerOptions = owners.map(o => ({ label: o, value: o}))
+
+    const ownerOptions = owners.map(o => ({ label: o, value: o }))
 
     const onSave = (owner: string) => {
         if (!owner || owner.trim() === '') return
@@ -94,7 +94,23 @@ export const SaveDialog = ({ isSaveOpen, setIsSaveOpen, total, playerBateu, play
         }
 
         handleSave(item);
-        toast.success('Pontuação salva!')
+        toast.success("Pontuação salva!", {
+            duration: 1500,
+            position: "top-center",
+            style: {
+                background: "linear-gradient(135deg, #16a34a, #22c55e)",
+                color: "#ffffff",
+                fontWeight: 600,
+                padding: "14px 22px",
+                borderRadius: "14px",
+                boxShadow: "0 10px 25px rgba(0,0,0,0.15)",
+            },
+            iconTheme: {
+                primary: "#dcfce7",
+                secondary: "#16a34a",
+            },
+        });
+
 
         // Auto-clean calculator state after successful save
         resetState()
@@ -114,33 +130,35 @@ export const SaveDialog = ({ isSaveOpen, setIsSaveOpen, total, playerBateu, play
             </DialogHeader>
 
             <div className="h-50">
-            <label className="text-sm opacity-80 mb-1 block">Time ou pessoa</label>
-            <CreatableSelect
-                classNamePrefix="owner"
-                placeholder="Digite ou selecione..."
-                formatCreateLabel={(v) => `Criar "${v}"`}
-                value={ownerOption}
-                onChange={(opt) => setOwnerOption(opt as OwnerOption | null)}
-                options={ownerOptions}
-                isClearable
-                styles={selectStyles}
-                theme={(theme: Theme) => ({
-                    ...theme,
-                    colors: {
-                        ...theme.colors,
-                        primary: '#646cff',
-                        neutral0: 'transparent',
-                        neutral80: 'inherit',
-                    },
-                })}
-            />
+                <label className="text-sm opacity-80 mb-1 block">Time ou pessoa</label>
+                <CreatableSelect
+                    inputValue={inputVal}
+                    onInputChange={(e) => { setInputVal(e) }}
+                    classNamePrefix="owner"
+                    placeholder="Digite ou selecione..."
+                    formatCreateLabel={(v) => `Criar "${v}"`}
+                    value={ownerOption}
+                    onChange={(opt) => setOwnerOption(opt as OwnerOption | null)}
+                    options={ownerOptions}
+                    isClearable
+                    styles={selectStyles}
+                    theme={(theme: Theme) => ({
+                        ...theme,
+                        colors: {
+                            ...theme.colors,
+                            primary: '#646cff',
+                            neutral0: 'transparent',
+                            neutral80: 'inherit',
+                        },
+                    })}
+                />
             </div>
             <DialogFooter>
                 <button className={secondaryButtonClass} onClick={cancelEdit}>Cancelar</button>
                 <button
                     className={primaryButtonClass}
                     onClick={() => {
-                        const name = ownerOption?.value?.trim() || ''
+                        const name = ownerOption?.value?.trim() || inputVal || ''
                         if (!name) return
                         onSave(name)
                         setIsSaveOpen(false)
