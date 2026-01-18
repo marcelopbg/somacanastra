@@ -122,7 +122,7 @@ export default function CanastraCalculator() {
   )
 
   // Reusable className constants
-  const containerClass = 'max-w-[1280px] flex flex-col gap-3 max-h-[100dvh]'
+  const containerClass = 'max-w-[1280px] flex flex-col gap-3 max-h-[100svh]'
   const checkboxGroupClass = 'flex flex-col gap-1'
   const checkboxLabelClass = 'ml-2'
   const sectionTitleClass = 'font-bold uppercase'
@@ -245,7 +245,7 @@ export default function CanastraCalculator() {
       </h3>
       
       <div className="flex justify-end mt-2 gap-2">
-        {/* <button className={cleanBtn} onClick={resetState}>Salvar</button> */}
+        <button className={cleanBtn} onClick={resetState}>Salvar</button>
         <button className={cleanBtn} onClick={resetState}>Limpar</button>
       </div>
     </div>
