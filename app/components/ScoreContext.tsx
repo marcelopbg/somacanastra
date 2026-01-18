@@ -44,7 +44,6 @@ export const ScoreContextProvider = ({ children }: { children: React.ReactNode }
         const next = [score, ...scoreList];
         window.localStorage.setItem(LS_KEY, JSON.stringify(next));
         setScoreList(next);
-        toast.success('Pontuação salva!')
     }
     
 
