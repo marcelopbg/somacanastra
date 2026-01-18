@@ -1,7 +1,6 @@
 import { SetStateAction, useState } from "react";
 import toast from "react-hot-toast";
-import { StylesConfig, Theme } from "react-select";
-import CreatableSelect from "react-select/creatable";
+import { Combobox, ComboboxOption, ComboboxOptions } from '@headlessui/react';
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "../../components/ui/dialog";
 import { primaryButtonClass, secondaryButtonClass } from "../lib/styleElements";
 import { PlayerScore, SavedScore } from "./CanastraCalculator";
@@ -15,74 +14,27 @@ interface SaveDialogProps {
     playerNaoPegouMorto: boolean;
     score: PlayerScore;
     resetState: () => void;
-
 }
 
 export type OwnerOption = { label: string; value: string }
 
 export const SaveDialog = ({ isSaveOpen, setIsSaveOpen, total, playerBateu, playerNaoPegouMorto, score, resetState }: SaveDialogProps) => {
 
-
-    const selectStyles: StylesConfig<OwnerOption, false> = {
-        control: (base) => ({
-            ...base,
-            backgroundColor: 'transparent',
-            borderColor: 'currentColor',
-            boxShadow: 'none',
-            minHeight: '32px',
-            height: '32px',
-            '&:hover': { borderColor: '#646cff' },
-        }),
-        valueContainer: (base) => ({ ...base, padding: '0 8px' }),
-        input: (base) => ({
-            ...base,
-            color: 'inherit',
-        }),
-        singleValue: (base) => ({
-            ...base,
-            color: 'inherit',
-        }),
-        placeholder: (base) => ({
-            ...base,
-            color: 'inherit',
-            opacity: 0.6,
-        }),
-        menu: (base) => ({
-            ...base,
-            // match the dialog content background so menu is solid and readable
-            backgroundColor: 'inherit',
-            border: 'none',
-            borderRadius: 8,
-            boxShadow: '0 10px 30px rgba(2,6,23,0.45)',
-            padding: 6,
-            zIndex: 60,
-        }),
-        menuList: (base) => ({ ...base, padding: 4, borderRadius: 6 }),
-        option: (base, state) => ({
-            ...base,
-            backgroundColor: state.isFocused ? 'rgba(100,92,255,0.12)' : 'transparent',
-            color: 'inherit',
-            borderRadius: 6,
-            padding: '6px 8px',
-        }),
-        dropdownIndicator: (base) => ({ ...base, padding: 4 }),
-        clearIndicator: (base) => ({ ...base, padding: 4 }),
-        indicatorsContainer: (base) => ({ ...base, paddingRight: 4 }),
-    }
-
     const [ownerOption, setOwnerOption] = useState<OwnerOption | null>(null);
     const [inputVal, setInputVal] = useState('');
     const { handleSave, scoreList } = useScoreContext();
+
     const owners = Array.from(scoreList.map(s => s.ownerName).reduce((prev, curr) => {
         prev.add(curr);
         return prev;
-    }, new Set<string>));
+    }, new Set<string>()));
 
-    const ownerOptions = owners.map(o => ({ label: o, value: o }))
+    const ownerOptions = owners.map(o => ({ label: o, value: o }));
 
     const onSave = (owner: string) => {
-        if (!owner || owner.trim() === '') return
-        const createdAt = new Date().toISOString()
+        if (!owner.trim()) return;
+
+        const createdAt = new Date().toISOString();
         const item: SavedScore = {
             id: createdAt,
             ownerName: owner.trim(),
@@ -91,7 +43,7 @@ export const SaveDialog = ({ isSaveOpen, setIsSaveOpen, total, playerBateu, play
             playerNaoPegouMorto,
             score: structuredClone(score),
             createdAt,
-        }
+        };
 
         handleSave(item);
         toast.success("Pontuação salva!", {
@@ -111,63 +63,110 @@ export const SaveDialog = ({ isSaveOpen, setIsSaveOpen, total, playerBateu, play
             },
         });
 
-
-        // Auto-clean calculator state after successful save
-        resetState()
-        setOwnerOption(null)
+        resetState();
+        setOwnerOption(null);
+        setInputVal('');
     }
 
     const cancelEdit = () => {
         setIsSaveOpen(false);
         setOwnerOption(null);
-
+        setInputVal('');
     }
 
-    return <Dialog open={isSaveOpen} onOpenChange={setIsSaveOpen} >
-        <DialogContent>
-            <DialogHeader>
-                <DialogTitle>Salvar pontuação</DialogTitle>
-            </DialogHeader>
+    const filteredOptions = ownerOptions.filter(o =>
+        o.label.toLowerCase().includes(inputVal.toLowerCase())
+    );
 
-            <div className="h-50">
-                <label className="text-sm opacity-80 mb-1 block">Time ou pessoa</label>
-                <CreatableSelect
-                    inputValue={inputVal}
-                    onInputChange={(e) => { setInputVal(e) }}
-                    classNamePrefix="owner"
-                    placeholder="Digite ou selecione..."
-                    formatCreateLabel={(v) => `Criar "${v}"`}
-                    value={ownerOption}
-                    onChange={(opt) => setOwnerOption(opt as OwnerOption | null)}
-                    options={ownerOptions}
-                    isClearable
-                    styles={selectStyles}
-                    theme={(theme: Theme) => ({
-                        ...theme,
-                        colors: {
-                            ...theme.colors,
-                            primary: '#646cff',
-                            neutral0: 'transparent',
-                            neutral80: 'inherit',
-                        },
-                    })}
-                />
-            </div>
-            <DialogFooter>
-                <button className={secondaryButtonClass} onClick={cancelEdit}>Cancelar</button>
-                <button
-                    className={primaryButtonClass}
-                    onClick={() => {
-                        const name = ownerOption?.value?.trim() || inputVal || ''
-                        if (!name) return
-                        onSave(name)
-                        setIsSaveOpen(false)
-                    }}
-                >
-                    Salvar
-                </button>
+    const exactMatch = ownerOptions.some(o => o.label.toLowerCase() === inputVal.toLowerCase());
 
-            </DialogFooter>
-        </DialogContent>
-    </Dialog>
+    return (
+        <Dialog open={isSaveOpen} onOpenChange={setIsSaveOpen}>
+            <DialogContent>
+                <DialogHeader>
+                    <DialogTitle>Salvar pontuação</DialogTitle>
+                </DialogHeader>
+
+                <div className="h-50">
+                    <label className="text-sm opacity-80 mb-1 block">Time ou pessoa</label>
+                    <div className="relative">
+                        <Combobox
+                            value={ownerOption}
+                            onChange={(opt: OwnerOption | null) => {
+                                setOwnerOption(opt);
+                                setInputVal(opt?.value ?? '');
+                            }}
+                        >
+                            <div className="flex items-center gap-2">
+                                <Combobox.Input
+                                    className="w-full border border-gray-300 dark:border-gray-700 rounded px-2 py-1 text-sm bg-transparent focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                                    displayValue={(o: OwnerOption | null) => o?.label ?? inputVal}
+                                    onChange={e => {
+                                        setInputVal(e.target.value);
+                                        setOwnerOption(null); // reset selected option when typing free text
+                                    }}
+                                    placeholder="Digite ou selecione..."
+                                    value={inputVal}
+                                />
+                                <button
+                                    type="button"
+                                    className="text-sm text-gray-500 hover:text-gray-700"
+                                    onClick={() => { setOwnerOption(null); setInputVal('') }}
+                                    aria-label="Limpar"
+                                >
+                                    ✕
+                                </button>
+                            </div>
+
+                            {filteredOptions.length > 0 &&
+                                (
+
+                                    <ComboboxOptions className="absolute mt-1 w-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded shadow z-50 max-h-48 overflow-auto text-sm max-w-[335px]">
+                                        {inputVal.trim().length > 0 && !exactMatch && (
+                                            <ComboboxOption
+                                                key="create"
+                                                value={{ label: inputVal, value: inputVal }}
+                                                className={({ active }) => `cursor-pointer px-2 py-1 ${active ? 'bg-indigo-100 dark:bg-indigo-900' : ''}`}
+                                            >
+                                                {`Criar "${inputVal}"`}
+                                            </ComboboxOption>
+                                        )}
+
+                                        {filteredOptions.length > 0 ? (
+                                            filteredOptions.map(o => (
+                                                <ComboboxOption
+                                                    key={o.value}
+                                                    value={o}
+                                                    className={({ active }) => `cursor-pointer px-2 py-1 ${active ? 'bg-indigo-100 dark:bg-indigo-900' : ''}`}
+                                                >
+                                                    {o.label}
+                                                </ComboboxOption>
+                                            ))
+                                        ) : (
+                                            <div className="px-2 py-1 text-gray-500">Nenhuma opção</div>
+                                        )}
+                                    </ComboboxOptions>
+                                )}
+                        </Combobox>
+                    </div>
+                </div>
+
+                <DialogFooter>
+                    <button className={secondaryButtonClass} onClick={cancelEdit}>Cancelar</button>
+                    <button
+                        onMouseDown={e => e.preventDefault()}
+                        className={primaryButtonClass}
+                        onClick={() => {
+                            const name = inputVal.trim() || ownerOption?.value.trim() || '';
+                            if (!name) return;
+                            onSave(name);
+                            setIsSaveOpen(false);
+                        }}
+                    >
+                        Salvar
+                    </button>
+                </DialogFooter>
+            </DialogContent>
+        </Dialog>
+    );
 }
