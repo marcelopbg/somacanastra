@@ -51,7 +51,7 @@ export default function ScoreList({ items, removeItem, clearAll, isScoreLoading 
             .sort((a, b) => b.total - a.total);
     }, [items]);
     
-    const container = "w-full max-w-[400px] px-4 py-2 min-h-svh py-5 flex flex-col gap-10";
+    const container = "flex flex-col gap-10  max-w-[400px] w-full";
     const headerRow = "flex items-center justify-between mb-4";
 
     const card =
@@ -81,7 +81,7 @@ export default function ScoreList({ items, removeItem, clearAll, isScoreLoading 
     ======================= */
 
     return (
-        <main className={container}>
+        <div className={container}>
             {/* Dashboard */}
             {totalsByPlayer.length > 0 && (
                 <section className={playerTotalsSection}>
@@ -111,7 +111,7 @@ export default function ScoreList({ items, removeItem, clearAll, isScoreLoading 
             <div>
 
                 <div className={headerRow}>
-                    <h1 className="text-xl font-semibold">Pontuações Salvas</h1>
+                    <h3 className="text-sm font-semibold mb-2 opacity-80">Pontuações Salvas</h3>
                     {sortedItems.length > 0 && 
                     <button className={danger} onClick={clearAll}>
                         Limpar lista
@@ -192,6 +192,6 @@ export default function ScoreList({ items, removeItem, clearAll, isScoreLoading 
                 <Link href="/" className={navLinkClass}>Voltar para calculadora</Link>
 
             </div>
-        </main>
+        </div>
     );
 }

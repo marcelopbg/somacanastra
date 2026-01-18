@@ -139,15 +139,15 @@ export default function CanastraCalculator() {
   )
 
   // Reusable className constants
-  const containerClass = 'max-w-[1280px] flex flex-col gap-3'
+  const containerClass = 'flex flex-col gap-3'
   const checkboxGroupClass = 'flex flex-col gap-1'
   const checkboxLabelClass = 'ml-2'
   const sectionTitleClass = 'font-bold uppercase'
   const groupColumnClass = 'flex flex-col gap-[6px] pl-[12px]'
   const rowItemClass = 'flex w-[330px] justify-between'
   const inputLabelClassName = 'min-w-[140px]'
-  const inputNumberClass = 'w-[170px] rounded border border-gray-400 dark:border-gray-500 bg-transparent px-2 py-[4px] text-inherit focus:ring-0 focus:border-[#646cff] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#646cff] focus-visible:outline-offset-1'
-  const sumTitleClass = 'font-semibold text-lg text-[rgb(21,199,21)] dark:text-[lightgreen]'
+  const inputNumberClass = 'w-[170px] rounded border border-gray-400 dark:border-gray-500 bg-transparent px-2 py-[4px] text-inherit focus:ring-0 focus:border-indigo-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-indigo-300 focus-visible:outline-offse t-1'
+  const sumTitleClass = 'font-semibold text-lg text-green-600 dark:text-[lightgreen]'
   const sectionClass = 'flex flex-col gap-2';
 
 
@@ -274,11 +274,9 @@ export default function CanastraCalculator() {
         SOMA: {total}
       </h3>
 
-      <div className="flex justify-between mt-2">
-        <div className='flex gap-2'>
+      <div className="flex justify-end gap-2 mt-2">
           <button className={primaryButtonClass} onClick={() => setIsSaveOpen(true)}>Salvar</button>
           <button className={secondaryButtonClass} onClick={resetState}>Limpar</button>
-        </div>
         <Link href="/pontuacoes-salvas" className={navLinkClass}>Ver pontuações salvas</Link>
       </div>
 

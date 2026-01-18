@@ -60,7 +60,7 @@ export default function RootLayout({
   return (
     <html lang="pt-BR">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased m-0 flex place-items-center min-w-[320px] font-[system-ui,Avenir,Helvetica,Arial,sans-serif] leading-[1.5] font-normal text-[#213547] bg-white dark:text-[rgba(255,255,255,0.87)] dark:bg-[#242424] min-h-svh`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased m-0 flex place-items-center min-w-[320px] font-[system-ui,Avenir,Helvetica,Arial,sans-serif] leading-[1.5] font-normal text-[#213547] bg-white dark:text-[rgba(255,255,255,0.87)] dark:bg-[#242424] mx-auto`}
         style={{ colorScheme: 'light dark' }}
       >
         <Script
@@ -77,7 +77,9 @@ export default function RootLayout({
         </Script>
 
         <ScoreContextProvider>
+          <main className="w-full py-8">
           {children}
+          </main>
         </ScoreContextProvider>
         <Toaster position="top-right" />
       </body>
