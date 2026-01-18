@@ -245,7 +245,7 @@ export default function CanastraCalculator() {
       </h3>
       
       <div className="flex justify-end mt-2 gap-2">
-        <button className={cleanBtn} onClick={resetState}>Salvar</button>
+        {/* <button className={cleanBtn} onClick={resetState}>Salvar</button> */}
         <button className={cleanBtn} onClick={resetState}>Limpar</button>
       </div>
     </div>
