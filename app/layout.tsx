@@ -58,7 +58,8 @@ export default function RootLayout({
   return (
     <html lang="pt-BR">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased m-0 flex place-items-center min-w-[320px] min-h-screen font-[system-ui,Avenir,Helvetica,Arial,sans-serif] leading-[1.5] font-normal text-[#213547] bg-white dark:text-[rgba(255,255,255,0.87)] dark:bg-[#242424]`}
+        style={{ colorScheme: 'light dark' }}
       >
         <Script
           async

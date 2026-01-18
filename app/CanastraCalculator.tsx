@@ -1,6 +1,6 @@
 'use client'
 import { useEffect, useMemo, useState } from 'react'
-import './App.css'
+// Tailwind replaces all custom CSS styles
 
 /* =======================
    DOMAIN MODELS
@@ -121,96 +121,132 @@ export default function CanastraCalculator() {
     [playerBateu, playerNaoPegouMorto, score]
   )
 
+  // Reusable className constants
+  const containerClass = 'max-w-[1280px] flex flex-col gap-3'
+  const checkboxGroupClass = 'flex flex-col gap-1'
+  const checkboxLabelClass = 'ml-2'
+  const sectionTitleClass = 'font-bold uppercase'
+  const groupColumnClass = 'flex flex-col gap-[6px] pl-[12px]'
+  const rowItemClass = 'flex w-[330px] justify-between'
+  const inputLabelClassName = 'min-w-[140px]'
+  const inputNumberClass = 'w-[170px] rounded border border-gray-400 dark:border-gray-500 bg-transparent px-2 py-[4px] text-inherit focus:ring-0 focus:border-[#646cff] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#646cff] focus-visible:outline-offset-1'
+  const sumTitleClass = 'font-semibold text-lg text-[rgb(21,199,21)] dark:text-[lightgreen]'
+  const cleanBtn = 'bg-[#ababd7] text-black rounded-[6px] border border-transparent px-3 py-1 text-sm font-medium opacity-80 hover:opacity-100 focus-visible:outline focus-visible:outline-4 focus-visible:outline-[#646cff] focus-visible:outline-offset-2'
+  const sectionClass = 'flex flex-col gap-2';
+
   return (
-    <div>
-      <button className="btn" onClick={resetState}>Limpar</button>
+    <div className={containerClass}>
+      {/* Limpar moved to bottom right and less prominent */}
+      <div className={checkboxGroupClass}>
+        <div>
+          <input
+            id="playerBateu"
+            type="checkbox"
+            checked={playerBateu}
+            onChange={e => setPlayerBateu(e.target.checked)}
+          />
+          <label htmlFor="playerBateu" className={checkboxLabelClass}>Jogador bateu</label>
+        </div>
 
-      <div>
-        <input
-          id="playerBateu"
-          type="checkbox"
-          checked={playerBateu}
-          onChange={e => setPlayerBateu(e.target.checked)}
-        />
-        <label htmlFor="playerBateu">Jogador bateu</label>
+        <div>
+          <input
+            id="playerNaoPegouMorto"
+            type="checkbox"
+            checked={playerNaoPegouMorto}
+            onChange={e => setPlayerNaoPegouMorto(e.target.checked)}
+          />
+          <label htmlFor="playerNaoPegouMorto" className={checkboxLabelClass}>
+            Jogador não pegou morto
+          </label>
+        </div>
       </div>
+      <section className={sectionClass}>
+        <h4 className={sectionTitleClass}>CANASTRAS</h4>
+        <div className={groupColumnClass}>
+          {canastraFields.map(f => {
+            const inputId = `canastra_${f.key}`
+            return (
+              <div className={rowItemClass} key={f.key}>
+                <label className={inputLabelClassName} htmlFor={inputId}>{f.label}</label>
+                <input
+                  id={inputId}
+                  type="number"
+                  value={score[f.key] ?? ''}
+                  className={inputNumberClass}
+                  onChange={e =>
+                    setScore(prev => {
+                      const next = structuredClone(prev)
+                      next[f.key] =
+                        e.target.value === '' ? null : Number(e.target.value)
+                      return next
+                    })
+                  }
+                />
+              </div>
+            )
+          })}
+        </div>
+      </section>
+      <section className={sectionClass}>
+        <h4 className={sectionTitleClass}>Para SOMAR</h4>
+        <div className={groupColumnClass}>
+          {cardFields.map(f => {
+            const inputId = `sum_${f.key}`
+            return (
+              <div className={rowItemClass} key={f.key}>
+                <label className={inputLabelClassName} htmlFor={inputId}>{f.label}</label>
+                <input
+                  id={inputId}
+                  type="number"
+                  value={score.cardsToSum[f.key] ?? ''}
+                  className={inputNumberClass}
+                  onChange={e =>
+                    updateCards(
+                      'cardsToSum',
+                      f.key,
+                      e.target.value === '' ? null : Number(e.target.value)
+                    )
+                  }
+                />
+              </div>
+            )
+          })}
+        </div>
+      </section>
+      <section className={sectionClass}>
+        <h4 className={sectionTitleClass}>Para SUBTRAIR</h4>
+        <div className={groupColumnClass}>
+          {cardFields.map(f => f.showOnSubtract !== false && (() => {
+            const inputId = `sub_${f.key}`
+            return (
+              <div className={rowItemClass} key={f.key}>
+                <label className={inputLabelClassName} htmlFor={inputId}>{f.label}</label>
+                <input
+                  id={inputId}
+                  type="number"
+                  value={score.cardsToSubtract[f.key] ?? ''}
+                  className={inputNumberClass}
+                  onChange={e =>
+                    updateCards(
+                      'cardsToSubtract',
+                      f.key,
+                      e.target.value === '' ? null : Number(e.target.value)
+                    )
+                  }
+                />
+              </div>
+            )
+          })())}
+        </div>
+      </section>
 
-      <div>
-        <input
-          id="playerNaoPegouMorto"
-          type="checkbox"
-          checked={playerNaoPegouMorto}
-          onChange={e => setPlayerNaoPegouMorto(e.target.checked)}
-        />
-        <label htmlFor="playerNaoPegouMorto">
-          Jogador não pegou morto
-        </label>
-      </div>
-
-      <h4>CANASTRAS</h4>
-      <div className="lil-gap">
-        {canastraFields.map(f => (
-          <div className="form-item" key={f.key}>
-            <label>{f.label}</label>
-            <input
-              type="number"
-              value={score[f.key] ?? ''}
-              onChange={e =>
-                setScore(prev => {
-                  const next = structuredClone(prev)
-                  next[f.key] =
-                    e.target.value === '' ? null : Number(e.target.value)
-                  return next
-                })
-              }
-            />
-          </div>
-        ))}
-      </div>
-
-      <h4>Para SOMAR</h4>
-      <div className="lil-gap">
-        {cardFields.map(f =>  (
-          <div className="form-item" key={f.key}>
-            <label>{f.label}</label>
-            <input
-              type="number"
-              value={score.cardsToSum[f.key] ?? ''}
-              onChange={e =>
-                updateCards(
-                  'cardsToSum',
-                  f.key,
-                  e.target.value === '' ? null : Number(e.target.value)
-                )
-              }
-            />
-          </div>
-        ))}
-      </div>
-
-      <h4>Para SUBTRAIR</h4>
-      <div className="lil-gap">
-        {cardFields.map(f => f.showOnSubtract !== false && (
-          <div className="form-item" key={f.key}>
-            <label>{f.label}</label>
-            <input
-              type="number"
-              value={score.cardsToSubtract[f.key] ?? ''}
-              onChange={e =>
-                updateCards(
-                  'cardsToSubtract',
-                  f.key,
-                  e.target.value === '' ? null : Number(e.target.value)
-                )
-              }
-            />
-          </div>
-        ))}
-      </div>
-
-      <h3 className='sum-h3'>
+      <h3 className={sumTitleClass}>
         SOMA: {total}
       </h3>
+      {/* 
+      <div className="flex justify-end mt-2">
+        <button className={cleanBtn} onClick={resetState}>Limpar</button>
+      </div> */}
     </div>
   )
 }
