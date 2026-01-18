@@ -1,6 +1,6 @@
-// app/page.tsx
-import CanastraCalculator from './CanastraCalculator'
+import CanastraCalculator from "./components/CanastraCalculator";
 
+// app/page.tsx
 export default function Page() {
   return (
     <main className="w-full flex justify-center">

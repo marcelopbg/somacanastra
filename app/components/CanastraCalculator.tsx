@@ -1,12 +1,29 @@
 'use client'
-import { useEffect, useMemo, useState } from 'react'
+import { useMemo, useState, useEffect } from 'react'
+import CreatableSelect from 'react-select/creatable'
+import type { StylesConfig, Theme } from 'react-select'
+import toast from 'react-hot-toast'
+import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from '../../components/ui/dialog'
+import { navLinkClass, primaryButtonClass, secondaryButtonClass } from '../lib/styleElements'
+import { SaveDialog } from './SaveDialog'
+import Link from 'next/link'
 // Tailwind replaces all custom CSS styles
 
 /* =======================
    DOMAIN MODELS
 ======================= */
+export type SavedScore = {
+  id: string
+  ownerName: string
+  total: number
+  playerBateu: boolean
+  playerNaoPegouMorto: boolean
+  score: PlayerScore
+  createdAt: string
+}
 
-class ContagemDeCartas {
+
+export class ContagemDeCartas {
   doisComoCoringa: number | null = null
   coringa: number | null = null
   oitoAoRei: number | null = null
@@ -14,7 +31,7 @@ class ContagemDeCartas {
   As: number | null = null
 }
 
-class PlayerScore {
+export class PlayerScore {
   canastraLimpa: number | null = null
   canastraSuja: number | null = null
   canastra500: number | null = null
@@ -131,11 +148,24 @@ export default function CanastraCalculator() {
   const inputLabelClassName = 'min-w-[140px]'
   const inputNumberClass = 'w-[170px] rounded border border-gray-400 dark:border-gray-500 bg-transparent px-2 py-[4px] text-inherit focus:ring-0 focus:border-[#646cff] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#646cff] focus-visible:outline-offset-1'
   const sumTitleClass = 'font-semibold text-lg text-[rgb(21,199,21)] dark:text-[lightgreen]'
-  const cleanBtn = 'bg-[#ababd7] text-black rounded-[6px] border border-transparent px-3 py-1 text-sm font-medium opacity-80 hover:opacity-100 focus-visible:outline focus-visible:outline-4 focus-visible:outline-[#646cff] focus-visible:outline-offset-2'
   const sectionClass = 'flex flex-col gap-2';
+
+
+
+
+  const [isSaveOpen, setIsSaveOpen] = useState(false)
 
   return (
     <div className={containerClass}>
+      <SaveDialog
+        isSaveOpen={isSaveOpen}
+        setIsSaveOpen={setIsSaveOpen}
+        playerBateu={playerBateu}
+        playerNaoPegouMorto={playerNaoPegouMorto}
+        total={total}
+        score={score}
+        resetState={resetState}
+      ></SaveDialog>
       {/* Limpar moved to bottom right and less prominent */}
       <div className={checkboxGroupClass}>
         <div>
@@ -243,11 +273,15 @@ export default function CanastraCalculator() {
       <h3 className={sumTitleClass}>
         SOMA: {total}
       </h3>
-      
-      <div className="flex justify-end mt-2 gap-2">
-        {/* <button className={cleanBtn} onClick={resetState}>Salvar</button> */}
-        <button className={cleanBtn} onClick={resetState}>Limpar</button>
+
+      <div className="flex justify-between mt-2">
+        <div className='flex gap-2'>
+          <button className={primaryButtonClass} onClick={() => setIsSaveOpen(true)}>Salvar</button>
+          <button className={secondaryButtonClass} onClick={resetState}>Limpar</button>
+        </div>
+        <Link href="/pontuacoes-salvas" className={navLinkClass}>Ver pontuações salvas</Link>
       </div>
+
     </div>
   )
 }

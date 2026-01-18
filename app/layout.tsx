@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { Toaster } from "react-hot-toast";
 import Script from "next/script";
+import { ScoreContextProvider } from "./components/ScoreContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -58,7 +60,7 @@ export default function RootLayout({
   return (
     <html lang="pt-BR">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased m-0 flex place-items-center min-w-[320px] font-[system-ui,Avenir,Helvetica,Arial,sans-serif] leading-[1.5] font-normal text-[#213547] bg-white dark:text-[rgba(255,255,255,0.87)] dark:bg-[#242424]`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased m-0 flex place-items-center min-w-[320px] font-[system-ui,Avenir,Helvetica,Arial,sans-serif] leading-[1.5] font-normal text-[#213547] bg-white dark:text-[rgba(255,255,255,0.87)] dark:bg-[#242424] min-h-svh`}
         style={{ colorScheme: 'light dark' }}
       >
         <Script
@@ -74,7 +76,10 @@ export default function RootLayout({
           `}
         </Script>
 
-        {children}
+        <ScoreContextProvider>
+          {children}
+        </ScoreContextProvider>
+        <Toaster position="top-right" />
       </body>
     </html>
   );
