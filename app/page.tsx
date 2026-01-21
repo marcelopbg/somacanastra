@@ -4,7 +4,7 @@ export default function Home() {
   return (
     <main className="min-h-screen text-white overflow-hidden">
       {/* HERO */}
-      <section className="relative mx-auto px-6 pt-28 pb-36 text-center overflow-hidden bg-gradient-to-r from-gray-700 via-gray-900 to-gray-800 opacity-99 ">
+      <section className="relative mx-auto px-6 pt-28 pb-36 text-center overflow-hidden bg-gray-900  from-gray-700 via-gray-900 to-gray-800opacity-99 ">
         <div className="absolute inset-0 bg-[url('/suits.png')] 
  opacity-3 pointer-events-none -z-20" />
 
