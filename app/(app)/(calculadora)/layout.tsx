@@ -49,6 +49,9 @@ export const metadata: Metadata = {
     index: true,
     follow: true,
   },
+  alternates: {
+    canonical: "https://somacanastra.com/"
+  }
 }
 
 
@@ -79,7 +82,7 @@ export default function RootLayout({
         <ScoreContextProvider>
           <main className="w-full py-8">
             <div className="px-4 py-3">
-          {children}
+              {children}
             </div>
           </main>
         </ScoreContextProvider>
