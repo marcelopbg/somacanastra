@@ -1,11 +1,12 @@
 import Image from 'next/image';
+import Link from 'next/link';
 
 export default function Home() {
   return (
     <main className="min-h-screen text-white overflow-hidden">
       {/* HERO */}
-      <section className="relative mx-auto px-6 pt-28 pb-36 text-center overflow-hidden bg-gray-900  from-gray-700 via-gray-900 to-gray-800opacity-99 ">
-        <div className="absolute inset-0 bg-[url('/suits.png')] 
+      <section className="relative mx-auto px-6 pt-28 pb-36 text-center overflow-hidden  bg-gradient-to-r from-gray-700 via-gray-900 to-gray-800 opacity-98 ">
+        <div className="absolute inset-0 
  opacity-3 pointer-events-none -z-20" />
 
 
@@ -22,13 +23,13 @@ export default function Home() {
 
         {/* CTA */}
         <div className="flex flex-col sm:flex-row gap-6 justify-center mb-10">
-          <a
-            href="/app"
+          <Link
+            href="/"
             className="inline-flex items-center justify-center gap-2 rounded-2xl bg-white text-teal-700 font-semibold px-12 py-5 text-lg shadow-2xl hover:scale-105 transition"
           >
             <Image src="/favicon.ico" width={28} height={28} alt="Soma Canastra" />
             Abrir calculadora
-          </a>
+          </Link>
           <a
             href="#como-funciona"
             className="inline-flex items-center justify-center rounded-2xl border border-white/30 px-10 py-5 font-semibold hover:bg-white/10 transition"
@@ -45,7 +46,7 @@ export default function Home() {
       {/* SOBRE */}
       <section className="relative -mt-24 z-10 bg-white text-gray-900 py-28">
         <div className="max-w-5xl mx-auto px-6 text-center">
-          <h2 className="text-4xl md:text-5xl font-bold mb-8">O que é o Soma Canastra?</h2>
+          <h2 className="text-4xl md:text-3xl font-bold mb-8">O que é?</h2>
           <p className="text-lg md:text-xl text-gray-600 leading-relaxed">
             O <strong>Soma Canastra</strong> é um aplicativo criado para facilitar a contagem de pontos
             da canastra. Ele substitui papel, caneta e contas manuais, permitindo que você registre
@@ -123,19 +124,19 @@ export default function Home() {
       <section className="relative mx-auto px-6 pt-28 pb-36 text-center overflow-hidden bg-gradient-to-r from-gray-700 via-gray-900 to-gray-800 opacity-98">
         <div className="absolute inset-0 bg-[url('/suits.png')] 
  opacity-2 pointer-events-none -z-20 bg-white-300 " />
- 
-         <h2 className="text-4xl md:text-5xl font-bold mb-6">Pronto para jogar?</h2>
+
+        <h2 className="text-4xl md:text-5xl font-bold mb-6">Pronto para jogar?</h2>
         <p className="text-white-100 text-lg mb-12 font-semibold">
           Abra a calculadora e deixe o Soma Canastra cuidar das contas.
         </p>
-        <a
-          href="/app"
+        <Link
+          href="/"
           className="inline-flex items-center justify-center gap-2 rounded-2xl bg-white text-green-700 font-semibold px-14 py-5 text-lg shadow-2xl hover:scale-105 transition"
         >
           <Image src="/favicon.ico" width={28} height={28} alt="Soma Canastra" />
 
           Começar agora
-        </a>
+        </Link>
         {/* </div> */}
       </section>
 

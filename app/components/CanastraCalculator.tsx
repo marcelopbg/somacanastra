@@ -273,9 +273,10 @@ export default function CanastraCalculator() {
       <div className="flex justify-end gap-2 mt-2">
           <button className={primaryButtonClass} onClick={() => setIsSaveOpen(true)}>Salvar</button>
           <button className={secondaryButtonClass} onClick={resetState}>Limpar</button>
-        <Link href="app/pontuacoes-salvas" className={navLinkClass}>Ver pontuações salvas</Link>
+        <Link href="/pontuacoes-salvas" className={navLinkClass}>Ver pontuações salvas</Link>
       </div>
 
     </div>
+    
   )
 }

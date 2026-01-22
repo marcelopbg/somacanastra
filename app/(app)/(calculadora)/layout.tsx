@@ -1,21 +1,18 @@
 import type { Metadata } from "next";
+import { Geist, Geist_Mono } from "next/font/google";
+import "../../globals.css";
+import { Toaster } from "react-hot-toast";
 import Script from "next/script";
-import "./globals.css";
+import { ScoreContextProvider } from "../../components/ScoreContext";
 
-import { Roboto, Roboto_Mono } from "next/font/google";
-
-const robotoSans = Roboto({
-  variable: "--font-roboto-sans",
+const geistSans = Geist({
+  variable: "--font-geist-sans",
   subsets: ["latin"],
-  weight: ["100", "300", "400", "500", "700", "900"],
-  display: "swap",
 });
 
-const robotoMono = Roboto_Mono({
-  variable: "--font-roboto-mono",
+const geistMono = Geist_Mono({
+  variable: "--font-geist-mono",
   subsets: ["latin"],
-  weight: ["100", "300", "400", "500", "700"],
-  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -63,7 +60,7 @@ export default function RootLayout({
   return (
     <html lang="pt-BR">
       <body
-        className={`${robotoSans.variable} ${robotoMono.variable} antialiased m-0 flex place-items-center min-w-[320px] font-[system-ui,Avenir,Helvetica,Arial,sans-serif] leading-[1.5] font-normal text-[#213547] bg-white dark:text-[rgba(255,255,255,0.87)] dark:bg-[#242424] mx-auto`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased m-0 flex place-items-center min-w-[320px] font-[system-ui,Avenir,Helvetica,Arial,sans-serif] leading-[1.5] font-normal text-[#213547] bg-white dark:text-[rgba(255,255,255,0.87)] dark:bg-[#242424] mx-auto`}
         style={{ colorScheme: 'light dark' }}
       >
         <Script
@@ -79,10 +76,14 @@ export default function RootLayout({
           `}
         </Script>
 
-        <main className="w-full"       style={{ fontFamily: "var(--font-roboto-mono), monospace" }}
->
-            {children}
-        </main>
+        <ScoreContextProvider>
+          <main className="w-full py-8">
+            <div className="px-4 py-3">
+          {children}
+            </div>
+          </main>
+        </ScoreContextProvider>
+        <Toaster position="top-right" />
       </body>
     </html>
   );

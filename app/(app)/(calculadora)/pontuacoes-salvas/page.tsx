@@ -1,7 +1,8 @@
 // app/page.tsx
 'use client'
-import ScoreList from "../../components/ScoreList";
-import { ScoreContextProvider, useScoreContext } from "../../components/ScoreContext";
+
+import { ScoreContextProvider, useScoreContext } from "../../../components/ScoreContext"
+import ScoreList from "../../../components/ScoreList"
 
 
 export default function Page() {

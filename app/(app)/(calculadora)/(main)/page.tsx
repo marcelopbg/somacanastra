@@ -1,4 +1,4 @@
-import CanastraCalculator from "../components/CanastraCalculator";
+import CanastraCalculator from "../../../components/CanastraCalculator";
 
 // app/page.tsx
 export default function Page() {
